@@ -13,11 +13,6 @@ export const Route = createFileRoute("/admin")({
 });
 
 function AdminPage() {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const [isEditing, setIsEditing] = useState<any>(null);
-  const [isAdding, setIsAdding] = useState(false);
-
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
@@ -78,6 +73,14 @@ function AdminPage() {
     );
   }
 
+  return <AdminDashboard />;
+}
+
+function AdminDashboard() {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const [isEditing, setIsEditing] = useState<any>(null);
+  const [isAdding, setIsAdding] = useState(false);
   const [activeTab, setActiveTab] = useState("products");
   const [productSearch, setProductSearch] = useState("");
 
