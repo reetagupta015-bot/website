@@ -19,6 +19,7 @@ function AdminPage() {
   const [isAdding, setIsAdding] = useState(false);
 
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    if (typeof window === "undefined") return false;
     return sessionStorage.getItem("adminAuth") === "true";
   });
   const [loginId, setLoginId] = useState("");
