@@ -1,4 +1,4 @@
-import { createMiddleware } from "./server-C6r5-uaW.mjs";
+import { createMiddleware } from "./server-Dc7HwXFR.mjs";
 import { renderErrorPage } from "./index.mjs";
 import "../_libs/seroval.mjs";
 import "../_libs/react.mjs";
@@ -50,7 +50,7 @@ const errorMiddleware = createMiddleware().server(async ({ next }) => {
       throw error;
     }
     console.error(error);
-    return new Response(renderErrorPage(), {
+    return new Response(renderErrorPage(error), {
       status: 500,
       headers: { "content-type": "text/html; charset=utf-8" }
     });

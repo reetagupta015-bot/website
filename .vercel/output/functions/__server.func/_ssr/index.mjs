@@ -20,7 +20,10 @@ function consumeLastCapturedError() {
   lastCapturedError = void 0;
   return error;
 }
-function renderErrorPage() {
+function renderErrorPage(error) {
+  const errorDetails = error ? error instanceof Error ? `${error.name}: ${error.message}
+${error.stack}` : typeof error === "object" ? JSON.stringify(error, null, 2) : String(error) : "";
+  const errorHtml = errorDetails ? `<div style="text-align: left; background: #fee2e2; border: 1px solid #fca5a5; color: #991b1b; padding: 1rem; border-radius: 0.375rem; margin-top: 1.5rem; overflow: auto; max-height: 250px; font-family: monospace; font-size: 0.8rem; white-space: pre-wrap; text-align: left; direction: ltr;">${escapeHtml(errorDetails)}</div>` : "";
   return `<!doctype html>
 <html lang="en">
   <head>
@@ -46,21 +49,25 @@ function renderErrorPage() {
         <button class="primary" onclick="location.reload()">Try again</button>
         <a class="secondary" href="/">Go home</a>
       </div>
+      ${errorHtml}
     </div>
   </body>
 </html>`;
 }
+function escapeHtml(str) {
+  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+}
 let serverEntryPromise;
 async function getServerEntry() {
   if (!serverEntryPromise) {
-    serverEntryPromise = import("./server-C6r5-uaW.mjs").then((n) => n.server).then(
+    serverEntryPromise = import("./server-Dc7HwXFR.mjs").then((n) => n.server).then(
       (m) => m.default ?? m
     );
   }
   return serverEntryPromise;
 }
-function brandedErrorResponse() {
-  return new Response(renderErrorPage(), {
+function brandedErrorResponse(error) {
+  return new Response(renderErrorPage(error), {
     status: 500,
     headers: { "content-type": "text/html; charset=utf-8" }
   });
@@ -90,8 +97,9 @@ async function normalizeCatastrophicSsrResponse(response) {
   if (!isCatastrophicSsrErrorBody(body, response.status)) {
     return response;
   }
-  console.error(consumeLastCapturedError() ?? new Error(`h3 swallowed SSR error: ${body}`));
-  return brandedErrorResponse();
+  const err = consumeLastCapturedError() ?? new Error(`h3 swallowed SSR error: ${body}`);
+  console.error(err);
+  return brandedErrorResponse(err);
 }
 const server = {
   async fetch(request, env, ctx) {
@@ -101,7 +109,7 @@ const server = {
       return await normalizeCatastrophicSsrResponse(response);
     } catch (error) {
       console.error(error);
-      return brandedErrorResponse();
+      return brandedErrorResponse(error);
     }
   }
 };
