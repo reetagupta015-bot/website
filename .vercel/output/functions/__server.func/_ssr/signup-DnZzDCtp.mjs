@@ -1,88 +1,42 @@
-import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { d as useNavigate, L as Link } from "../_libs/tanstack__react-router.mjs";
-import { supabase } from "./router-DnJebkYP.mjs";
-import { l as lovable } from "./index-D1G6KN6E.mjs";
-import { t as toast } from "../_libs/sonner.mjs";
-import "../_libs/supabase__realtime-js.mjs";
-import "../_libs/tanstack__router-core.mjs";
-import "../_libs/tanstack__history.mjs";
-import "../_libs/cookie-es.mjs";
-import "../_libs/seroval.mjs";
-import "../_libs/seroval-plugins.mjs";
-import "node:stream/web";
+import { reactExports, jsxRuntimeExports } from "./server-CIZhL1-P.mjs";
+import { useNavigate, Link, toast, supabase } from "./router-D6-O7ZmP.mjs";
+import { l as lovable } from "./index-CkFAQd0f.mjs";
+import "node:async_hooks";
 import "node:stream";
-import "../_libs/react-dom.mjs";
+import "node:stream/web";
 import "util";
 import "crypto";
 import "async_hooks";
 import "stream";
-import "../_libs/isbot.mjs";
-import "../_libs/tanstack__query-core.mjs";
-import "../_libs/tanstack__react-query.mjs";
-import "../_libs/supabase__postgrest-js.mjs";
-import "../_libs/supabase__storage-js.mjs";
-import "../_libs/iceberg-js.mjs";
-import "../_libs/radix-ui__react-dialog.mjs";
-import "../_libs/radix-ui__primitive.mjs";
-import "../_libs/radix-ui__react-compose-refs.mjs";
-import "../_libs/radix-ui__react-context.mjs";
-import "../_libs/radix-ui__react-id.mjs";
-import "../_libs/@radix-ui/react-use-layout-effect+[...].mjs";
-import "../_libs/@radix-ui/react-use-controllable-state+[...].mjs";
-import "../_libs/@radix-ui/react-dismissable-layer+[...].mjs";
-import "../_libs/radix-ui__react-primitive.mjs";
-import "../_libs/radix-ui__react-slot.mjs";
-import "../_libs/@radix-ui/react-use-callback-ref+[...].mjs";
-import "../_libs/@radix-ui/react-use-escape-keydown+[...].mjs";
-import "../_libs/radix-ui__react-focus-scope.mjs";
-import "../_libs/radix-ui__react-portal.mjs";
-import "../_libs/radix-ui__react-presence.mjs";
-import "../_libs/radix-ui__react-focus-guards.mjs";
-import "../_libs/react-remove-scroll.mjs";
-import "tslib";
-import "../_libs/react-remove-scroll-bar.mjs";
-import "../_libs/react-style-singleton.mjs";
-import "../_libs/get-nonce.mjs";
-import "../_libs/use-sidecar.mjs";
-import "../_libs/use-callback-ref.mjs";
-import "../_libs/aria-hidden.mjs";
-import "../_libs/class-variance-authority.mjs";
-import "../_libs/clsx.mjs";
-import "../_libs/tailwind-merge.mjs";
-import "../_libs/lucide-react.mjs";
-import "../_libs/supabase__functions-js.mjs";
-import "../_libs/supabase__phoenix.mjs";
-function LoginPage() {
+function SignupPage() {
   const navigate = useNavigate();
+  const [name, setName] = reactExports.useState("");
   const [email, setEmail] = reactExports.useState("");
   const [password, setPassword] = reactExports.useState("");
   const [loading, setLoading] = reactExports.useState(false);
-  reactExports.useEffect(() => {
-    supabase.auth.getSession().then(({
-      data
-    }) => {
-      if (data.session) navigate({
-        to: "/"
-      });
-    });
-  }, [navigate]);
-  const handleEmailLogin = async (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
     setLoading(true);
     const {
       error
-    } = await supabase.auth.signInWithPassword({
+    } = await supabase.auth.signUp({
       email,
-      password
+      password,
+      options: {
+        emailRedirectTo: window.location.origin,
+        data: {
+          full_name: name
+        }
+      }
     });
     setLoading(false);
     if (error) {
       toast.error(error.message);
       return;
     }
-    toast.success("Welcome back");
+    toast.success("Check your email to confirm your account");
     navigate({
-      to: "/"
+      to: "/login"
     });
   };
   const handleGoogle = async () => {
@@ -106,33 +60,37 @@ function LoginPage() {
         "Sheet",
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-accent", children: ".in" })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "font-serif text-2xl mt-6", children: "Welcome back" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-muted-foreground mt-1", children: "Sign in to your account" })
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "font-serif text-2xl mt-6", children: "Create your account" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-muted-foreground mt-1", children: "Begin your journey in brilliance" })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: handleGoogle, disabled: loading, className: "w-full flex items-center justify-center gap-3 border border-border py-3 text-sm hover:bg-secondary transition-colors disabled:opacity-50", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(GoogleIcon, {}),
-      " Continue with Google"
+      " Sign up with Google"
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 my-6", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex-1 h-px bg-border" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs uppercase tracking-widest text-muted-foreground", children: "or" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex-1 h-px bg-border" })
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleEmailLogin, className: "space-y-4", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleSignup, className: "space-y-4", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-xs uppercase tracking-widest text-muted-foreground", children: "Full Name" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "text", required: true, value: name, onChange: (e) => setName(e.target.value), className: "mt-1 w-full bg-background border border-border px-4 py-3 text-sm focus:outline-none focus:border-accent" })
+      ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-xs uppercase tracking-widest text-muted-foreground", children: "Email" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "email", required: true, value: email, onChange: (e) => setEmail(e.target.value), className: "mt-1 w-full bg-background border border-border px-4 py-3 text-sm focus:outline-none focus:border-accent" })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-xs uppercase tracking-widest text-muted-foreground", children: "Password" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "password", required: true, value: password, onChange: (e) => setPassword(e.target.value), className: "mt-1 w-full bg-background border border-border px-4 py-3 text-sm focus:outline-none focus:border-accent" })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "password", required: true, minLength: 6, value: password, onChange: (e) => setPassword(e.target.value), className: "mt-1 w-full bg-background border border-border px-4 py-3 text-sm focus:outline-none focus:border-accent" })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "submit", disabled: loading, className: "w-full bg-foreground text-background py-3 text-xs uppercase tracking-widest hover:bg-accent hover:text-accent-foreground transition-colors disabled:opacity-50", children: loading ? "Signing in…" : "Sign In" })
+      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "submit", disabled: loading, className: "w-full bg-foreground text-background py-3 text-xs uppercase tracking-widest hover:bg-accent hover:text-accent-foreground transition-colors disabled:opacity-50", children: loading ? "Creating account…" : "Create Account" })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-center text-sm text-muted-foreground mt-6", children: [
-      "New to Sheet.in?",
+      "Already have an account?",
       " ",
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/signup", className: "text-foreground underline hover:text-accent", children: "Create an account" })
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/login", className: "text-foreground underline hover:text-accent", children: "Sign In" })
     ] })
   ] }) });
 }
@@ -145,5 +103,5 @@ function GoogleIcon() {
   ] });
 }
 export {
-  LoginPage as component
+  SignupPage as component
 };

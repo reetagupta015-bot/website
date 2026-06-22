@@ -37,7 +37,7 @@ export default defineConfig({
   cloudflare: false,
   vite: {
     ssr: {
-      noExternal: ['@supabase/supabase-js', '@supabase/auth-js', 'tslib', '@lovable.dev/cloud-auth-js'],
+      noExternal: true,
     },
     plugins: [
       buildSsrErrorLogger(),

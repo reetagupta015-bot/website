@@ -1,56 +1,27 @@
-import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { d as useNavigate } from "../_libs/tanstack__react-router.mjs";
-import { useAuth, Header, supabase } from "./router-DnJebkYP.mjs";
-import { t as toast } from "../_libs/sonner.mjs";
-import "../_libs/supabase__realtime-js.mjs";
-import { U as User, c as Mail, d as Phone } from "../_libs/lucide-react.mjs";
-import "../_libs/tanstack__router-core.mjs";
-import "../_libs/tanstack__history.mjs";
-import "../_libs/cookie-es.mjs";
-import "../_libs/seroval.mjs";
-import "../_libs/seroval-plugins.mjs";
-import "node:stream/web";
+import { reactExports, jsxRuntimeExports } from "./server-CIZhL1-P.mjs";
+import { useAuth, useNavigate, Header, User, supabase, createLucideIcon, toast } from "./router-D6-O7ZmP.mjs";
+import "node:async_hooks";
 import "node:stream";
-import "../_libs/react-dom.mjs";
+import "node:stream/web";
 import "util";
 import "crypto";
 import "async_hooks";
 import "stream";
-import "../_libs/isbot.mjs";
-import "../_libs/tanstack__query-core.mjs";
-import "../_libs/tanstack__react-query.mjs";
-import "../_libs/supabase__postgrest-js.mjs";
-import "../_libs/supabase__storage-js.mjs";
-import "../_libs/iceberg-js.mjs";
-import "../_libs/radix-ui__react-dialog.mjs";
-import "../_libs/radix-ui__primitive.mjs";
-import "../_libs/radix-ui__react-compose-refs.mjs";
-import "../_libs/radix-ui__react-context.mjs";
-import "../_libs/radix-ui__react-id.mjs";
-import "../_libs/@radix-ui/react-use-layout-effect+[...].mjs";
-import "../_libs/@radix-ui/react-use-controllable-state+[...].mjs";
-import "../_libs/@radix-ui/react-dismissable-layer+[...].mjs";
-import "../_libs/radix-ui__react-primitive.mjs";
-import "../_libs/radix-ui__react-slot.mjs";
-import "../_libs/@radix-ui/react-use-callback-ref+[...].mjs";
-import "../_libs/@radix-ui/react-use-escape-keydown+[...].mjs";
-import "../_libs/radix-ui__react-focus-scope.mjs";
-import "../_libs/radix-ui__react-portal.mjs";
-import "../_libs/radix-ui__react-presence.mjs";
-import "../_libs/radix-ui__react-focus-guards.mjs";
-import "../_libs/react-remove-scroll.mjs";
-import "tslib";
-import "../_libs/react-remove-scroll-bar.mjs";
-import "../_libs/react-style-singleton.mjs";
-import "../_libs/get-nonce.mjs";
-import "../_libs/use-sidecar.mjs";
-import "../_libs/use-callback-ref.mjs";
-import "../_libs/aria-hidden.mjs";
-import "../_libs/class-variance-authority.mjs";
-import "../_libs/clsx.mjs";
-import "../_libs/tailwind-merge.mjs";
-import "../_libs/supabase__functions-js.mjs";
-import "../_libs/supabase__phoenix.mjs";
+const __iconNode$1 = [
+  ["path", { d: "m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7", key: "132q7q" }],
+  ["rect", { x: "2", y: "4", width: "20", height: "16", rx: "2", key: "izxlao" }]
+];
+const Mail = createLucideIcon("mail", __iconNode$1);
+const __iconNode = [
+  [
+    "path",
+    {
+      d: "M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384",
+      key: "9njp5v"
+    }
+  ]
+];
+const Phone = createLucideIcon("phone", __iconNode);
 function ProfilePage() {
   const {
     session,
