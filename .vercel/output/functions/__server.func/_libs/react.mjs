@@ -505,8 +505,8 @@ function requireJsxRuntime() {
 var jsxRuntimeExports = requireJsxRuntime();
 export {
   React as R,
-  React$1 as a,
-  requireReact as b,
+  requireReact as a,
+  React$1 as b,
   getDefaultExportFromCjs as g,
   jsxRuntimeExports as j,
   reactExports as r

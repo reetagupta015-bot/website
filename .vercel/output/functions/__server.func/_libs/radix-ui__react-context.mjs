@@ -73,6 +73,6 @@ function composeContextScopes(...scopes) {
   return createScope;
 }
 export {
-  createContextScope as a,
-  createContext2 as c
+  createContext2 as a,
+  createContextScope as c
 };

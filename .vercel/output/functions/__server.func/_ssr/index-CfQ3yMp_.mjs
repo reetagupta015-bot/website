@@ -1,5 +1,5 @@
 import { c as createLovableAuth } from "../_libs/lovable.dev__cloud-auth-js.mjs";
-import { supabase } from "./router-H_MyvO56.mjs";
+import { supabase } from "./router-DtmgV3UD.mjs";
 const lovableAuth = createLovableAuth();
 const lovable = {
   auth: {

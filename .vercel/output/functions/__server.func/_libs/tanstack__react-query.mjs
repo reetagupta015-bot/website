@@ -1,5 +1,5 @@
 import { r as reactExports, j as jsxRuntimeExports } from "./react.mjs";
-import { s as shouldThrowError, b as notifyManager, n as noop, e as environmentManager, a as QueryObserver, M as MutationObserver } from "./tanstack__query-core.mjs";
+import { s as shouldThrowError, n as notifyManager, a as noop, e as environmentManager, Q as QueryObserver, M as MutationObserver } from "./tanstack__query-core.mjs";
 var QueryClientContext = reactExports.createContext(
   void 0
 );
@@ -185,7 +185,7 @@ function useMutation(options, queryClient) {
 }
 export {
   QueryClientProvider as Q,
-  useQuery as a,
-  useQueryClient as b,
-  useMutation as u
+  useQueryClient as a,
+  useMutation as b,
+  useQuery as u
 };

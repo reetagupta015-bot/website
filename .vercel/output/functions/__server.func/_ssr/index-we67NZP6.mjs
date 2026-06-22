@@ -1,9 +1,9 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { u as useNavigate, L as Link } from "../_libs/tanstack__react-router.mjs";
-import { useAuth, useCart, supabase, Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle } from "./router-H_MyvO56.mjs";
+import { d as useNavigate, L as Link } from "../_libs/tanstack__react-router.mjs";
+import { useAuth, useCart, Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, CheckoutModal, supabase } from "./router-DtmgV3UD.mjs";
 import { t as toast } from "../_libs/sonner.mjs";
-import { a as useQuery } from "../_libs/tanstack__react-query.mjs";
-import { M as Menu, S as Search, U as User, e as ShoppingBag, X, b as Minus, c as Plus, R as RotateCcw, f as Truck, d as ShieldCheck, B as BadgeCheck } from "../_libs/lucide-react.mjs";
+import { u as useQuery } from "../_libs/tanstack__react-query.mjs";
+import { M as Menu, S as Search, U as User, a as ShoppingBag, X, b as Minus, P as Plus, R as RotateCcw, f as Truck, g as ShieldCheck, B as BadgeCheck } from "../_libs/lucide-react.mjs";
 import "../_libs/tanstack__router-core.mjs";
 import "../_libs/tanstack__history.mjs";
 import "../_libs/cookie-es.mjs";
@@ -135,6 +135,7 @@ function Header() {
     cartTotal
   } = useCart();
   const [searchQuery, setSearchQuery] = reactExports.useState("");
+  const [isCheckoutOpen, setIsCheckoutOpen] = reactExports.useState(false);
   const {
     data: searchResults,
     isLoading: searching
@@ -281,10 +282,11 @@ function Header() {
                 ] })
               ] }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-muted-foreground text-center", children: "Shipping & taxes calculated at checkout" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "w-full bg-foreground text-background py-4 uppercase tracking-widest text-sm font-medium hover:opacity-90 transition-opacity", children: "Proceed to Checkout" })
+              /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setIsCheckoutOpen(true), className: "w-full bg-foreground text-background py-4 uppercase tracking-widest text-sm font-medium hover:opacity-90 transition-opacity", children: "Proceed to Checkout" })
             ] })
           ] })
-        ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CheckoutModal, { isOpen: isCheckoutOpen, onClose: () => setIsCheckoutOpen(false) })
       ] })
     ] })
   ] });

@@ -152,6 +152,18 @@ function AdminDashboard() {
     onError: (error: any) => toast.error(error.message),
   });
 
+  const updateOrderStatus = useMutation({
+    mutationFn: async ({ id, status }: { id: string, status: string }) => {
+      const { error } = await supabase.from("orders").update({ status }).eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      toast.success("Order status updated");
+      queryClient.invalidateQueries({ queryKey: ["orders"] });
+    },
+    onError: (error: any) => toast.error(error.message),
+  });
+
   if (isLoading || isLoadingProfiles || isLoadingOrders) {
     return <div className="min-h-screen grid place-items-center"><p>Loading...</p></div>;
   }
@@ -285,9 +297,24 @@ function AdminDashboard() {
                     <td className="p-4 text-muted-foreground">{new Date(order.created_at).toLocaleDateString()}</td>
                     <td className="p-4">₹{order.total_amount?.toLocaleString("en-IN")}</td>
                     <td className="p-4">
-                      <span className={`px-2 py-1 text-[10px] uppercase tracking-widest ${order.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'}`}>
-                        {order.status}
-                      </span>
+                      <select 
+                        value={order.status}
+                        onChange={(e) => updateOrderStatus.mutate({ id: order.id, status: e.target.value })}
+                        disabled={updateOrderStatus.isPending}
+                        className={`px-2 py-1 text-[10px] uppercase tracking-widest border focus:outline-none cursor-pointer ${
+                          order.status === 'Delivered' ? 'bg-green-50 text-green-700 border-green-200' :
+                          order.status === 'Cancelled' ? 'bg-red-50 text-red-700 border-red-200' :
+                          order.status === 'Shipped' ? 'bg-blue-50 text-blue-700 border-blue-200' :
+                          order.status === 'Processing' ? 'bg-purple-50 text-purple-700 border-purple-200' :
+                          'bg-yellow-50 text-yellow-700 border-yellow-200'
+                        }`}
+                      >
+                        <option value="Pending">Pending</option>
+                        <option value="Processing">Processing</option>
+                        <option value="Shipped">Shipped</option>
+                        <option value="Delivered">Delivered</option>
+                        <option value="Cancelled">Cancelled</option>
+                      </select>
                     </td>
                   </tr>
                 ))}

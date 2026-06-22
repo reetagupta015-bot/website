@@ -1,9 +1,9 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { u as useNavigate } from "../_libs/tanstack__react-router.mjs";
-import { b as useQueryClient, a as useQuery, u as useMutation } from "../_libs/tanstack__react-query.mjs";
-import { supabase } from "./router-H_MyvO56.mjs";
+import { d as useNavigate } from "../_libs/tanstack__react-router.mjs";
+import { a as useQueryClient, u as useQuery, b as useMutation } from "../_libs/tanstack__react-query.mjs";
+import { supabase } from "./router-DtmgV3UD.mjs";
 import { t as toast } from "../_libs/sonner.mjs";
-import { c as Plus, P as Pen, T as Trash2 } from "../_libs/lucide-react.mjs";
+import { P as Plus, e as Pen, T as Trash2 } from "../_libs/lucide-react.mjs";
 import "../_libs/tanstack__router-core.mjs";
 import "../_libs/tanstack__history.mjs";
 import "../_libs/cookie-es.mjs";
@@ -54,13 +54,10 @@ import "../_libs/class-variance-authority.mjs";
 import "../_libs/clsx.mjs";
 import "../_libs/tailwind-merge.mjs";
 function AdminPage() {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const [isEditing, setIsEditing] = reactExports.useState(null);
-  const [isAdding, setIsAdding] = reactExports.useState(false);
-  const [isAuthenticated, setIsAuthenticated] = reactExports.useState(() => {
-    return sessionStorage.getItem("adminAuth") === "true";
-  });
+  const [isAuthenticated, setIsAuthenticated] = reactExports.useState(false);
+  reactExports.useEffect(() => {
+    setIsAuthenticated(sessionStorage.getItem("adminAuth") === "true");
+  }, []);
   const [loginId, setLoginId] = reactExports.useState("");
   const [loginPassword, setLoginPassword] = reactExports.useState("");
   const handleLogin = (e) => {
@@ -92,6 +89,13 @@ function AdminPage() {
       ] })
     ] }) });
   }
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(AdminDashboard, {});
+}
+function AdminDashboard() {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const [isEditing, setIsEditing] = reactExports.useState(null);
+  const [isAdding, setIsAdding] = reactExports.useState(false);
   const [activeTab, setActiveTab] = reactExports.useState("products");
   const [productSearch, setProductSearch] = reactExports.useState("");
   const {
@@ -194,6 +198,26 @@ function AdminPage() {
     },
     onError: (error) => toast.error(error.message)
   });
+  const updateOrderStatus = useMutation({
+    mutationFn: async ({
+      id,
+      status
+    }) => {
+      const {
+        error
+      } = await supabase.from("orders").update({
+        status
+      }).eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      toast.success("Order status updated");
+      queryClient.invalidateQueries({
+        queryKey: ["orders"]
+      });
+    },
+    onError: (error) => toast.error(error.message)
+  });
   if (isLoading || isLoadingProfiles || isLoadingOrders) {
     return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "min-h-screen grid place-items-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Loading..." }) });
   }
@@ -283,7 +307,16 @@ function AdminPage() {
             "₹",
             order.total_amount?.toLocaleString("en-IN")
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: "p-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: `px-2 py-1 text-[10px] uppercase tracking-widest ${order.status === "Pending" ? "bg-yellow-100 text-yellow-800" : "bg-green-100 text-green-800"}`, children: order.status }) })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: "p-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("select", { value: order.status, onChange: (e) => updateOrderStatus.mutate({
+            id: order.id,
+            status: e.target.value
+          }), disabled: updateOrderStatus.isPending, className: `px-2 py-1 text-[10px] uppercase tracking-widest border focus:outline-none cursor-pointer ${order.status === "Delivered" ? "bg-green-50 text-green-700 border-green-200" : order.status === "Cancelled" ? "bg-red-50 text-red-700 border-red-200" : order.status === "Shipped" ? "bg-blue-50 text-blue-700 border-blue-200" : order.status === "Processing" ? "bg-purple-50 text-purple-700 border-purple-200" : "bg-yellow-50 text-yellow-700 border-yellow-200"}`, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Pending", children: "Pending" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Processing", children: "Processing" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Shipped", children: "Shipped" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Delivered", children: "Delivered" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Cancelled", children: "Cancelled" })
+          ] }) })
         ] }, order.id)),
         (!orders || orders.length === 0) && /* @__PURE__ */ jsxRuntimeExports.jsx("tr", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("td", { colSpan: 5, className: "p-8 text-center text-muted-foreground", children: "No orders found." }) })
       ] })
@@ -291,7 +324,6 @@ function AdminPage() {
       /* @__PURE__ */ jsxRuntimeExports.jsx("thead", { className: "bg-secondary/50 border-b border-border", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: "p-4 font-medium uppercase tracking-wider text-xs", children: "Name" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: "p-4 font-medium uppercase tracking-wider text-xs", children: "Email" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: "p-4 font-medium uppercase tracking-wider text-xs", children: "Age" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: "p-4 font-medium uppercase tracking-wider text-xs", children: "Phone" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: "p-4 font-medium uppercase tracking-wider text-xs", children: "Joined" })
       ] }) }),
@@ -299,11 +331,10 @@ function AdminPage() {
         profiles?.map((profile) => /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { className: "border-b border-border last:border-0 hover:bg-secondary/20 transition-colors", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: "p-4 font-medium", children: profile.full_name || "—" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: "p-4", children: profile.email || "—" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: "p-4", children: profile.age || "—" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: "p-4", children: profile.phone || "—" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: "p-4 text-muted-foreground", children: new Date(profile.created_at).toLocaleDateString() })
         ] }, profile.id)),
-        (!profiles || profiles.length === 0) && /* @__PURE__ */ jsxRuntimeExports.jsx("tr", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("td", { colSpan: 5, className: "p-8 text-center text-muted-foreground", children: "No customers found." }) })
+        (!profiles || profiles.length === 0) && /* @__PURE__ */ jsxRuntimeExports.jsx("tr", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("td", { colSpan: 4, className: "p-8 text-center text-muted-foreground", children: "No customers found." }) })
       ] })
     ] }) }),
     (isEditing || isAdding) && /* @__PURE__ */ jsxRuntimeExports.jsx(ProductModal, { product: isEditing, onClose: () => {

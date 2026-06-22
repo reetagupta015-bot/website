@@ -1,7 +1,7 @@
 import { r as reactExports, j as jsxRuntimeExports } from "./react.mjs";
 import { c as composeEventHandlers } from "./radix-ui__primitive.mjs";
 import { u as useComposedRefs } from "./radix-ui__react-compose-refs.mjs";
-import { a as createContextScope, c as createContext2 } from "./radix-ui__react-context.mjs";
+import { c as createContextScope, a as createContext2 } from "./radix-ui__react-context.mjs";
 import { u as useId } from "./radix-ui__react-id.mjs";
 import { u as useControllableState } from "./@radix-ui/react-use-controllable-state+[...].mjs";
 import { D as DismissableLayer } from "./@radix-ui/react-dismissable-layer+[...].mjs";
@@ -316,12 +316,12 @@ var Title = DialogTitle;
 var Description = DialogDescription;
 var Close = DialogClose;
 export {
-  Close as C,
+  Content as C,
   Description as D,
   Overlay as O,
   Portal as P,
   Root as R,
   Title as T,
-  Content as a,
+  Close as a,
   Trigger as b
 };

@@ -1,6 +1,6 @@
 import { r as reactExports, j as jsxRuntimeExports, R as React } from "./react.mjs";
-import { w as invariant, x as isDangerousProtocol, l as exactPathTest, G as removeTrailingSlash, v as hasKeys, h as deepEqual, n as functionalUpdate, B as BaseRootRoute, a as BaseRoute, y as isModuleNotFoundError, z as isNotFound, t as getScrollRestorationScriptForRouter, J as rootRouteId, D as isServer, A as isRedirect, e as createNonReactiveReadonlyStore, d as createNonReactiveMutableStore, R as RouterCore, k as escapeHtml, o as getAssetCrossOrigin, s as getScriptPreloadAttrs, b as appendUniqueUserTags, I as resolveManifestCssLink, L as transformReadableStreamWithRouter, K as transformPipeableStreamWithRouter } from "./tanstack__router-core.mjs";
-import { a as ReactDOMServer } from "./react-dom.mjs";
+import { i as invariant, a as isDangerousProtocol, e as exactPathTest, r as removeTrailingSlash, h as hasKeys, d as deepEqual, f as functionalUpdate, B as BaseRootRoute, b as BaseRoute, c as isModuleNotFoundError, g as isNotFound, j as getScrollRestorationScriptForRouter, k as rootRouteId, l as isServer, m as isRedirect, n as createNonReactiveReadonlyStore, o as createNonReactiveMutableStore, R as RouterCore, p as escapeHtml, q as getAssetCrossOrigin, s as getScriptPreloadAttrs, t as appendUniqueUserTags, u as resolveManifestCssLink, v as transformReadableStreamWithRouter, w as transformPipeableStreamWithRouter } from "./tanstack__router-core.mjs";
+import { R as ReactDOMServer } from "./react-dom.mjs";
 import { PassThrough } from "node:stream";
 import { i as isbot } from "./isbot.mjs";
 var reactUse = reactExports.use;
@@ -1115,10 +1115,10 @@ export {
   RouterProvider as R,
   Scripts as S,
   createRootRouteWithContext as a,
-  createRouter as b,
-  createFileRoute as c,
-  useRouter as d,
+  createFileRoute as b,
+  createRouter as c,
+  useNavigate as d,
   lazyRouteComponent as l,
   renderRouterToStream as r,
-  useNavigate as u
+  useRouter as u
 };

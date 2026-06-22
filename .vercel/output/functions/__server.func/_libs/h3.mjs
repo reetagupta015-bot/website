@@ -399,8 +399,8 @@ var H3Core = class {
   }
 };
 export {
-  H3Core as H,
-  HTTPError as a,
+  HTTPError as H,
+  H3Core as a,
   defineLazyEventHandler as d,
   toRequest as t
 };

@@ -1,6 +1,6 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { u as useNavigate } from "../_libs/tanstack__react-router.mjs";
-import { supabase } from "./router-H_MyvO56.mjs";
+import { d as useNavigate } from "../_libs/tanstack__react-router.mjs";
+import { supabase } from "./router-DtmgV3UD.mjs";
 import "../_libs/sonner.mjs";
 import "../_libs/tanstack__router-core.mjs";
 import "../_libs/tanstack__history.mjs";

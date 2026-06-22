@@ -20,6 +20,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useCart } from "@/contexts/CartContext";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { X, Plus, Minus } from "lucide-react";
+import { CheckoutModal } from "@/components/CheckoutModal";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -80,6 +81,7 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const { cart, removeFromCart, updateQuantity, cartCount, cartTotal } = useCart();
   const [searchQuery, setSearchQuery] = useState("");
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
 
   const { data: searchResults, isLoading: searching } = useQuery({
     queryKey: ["search", searchQuery],
@@ -257,13 +259,15 @@ export function Header() {
                     <span className="text-lg">₹{cartTotal.toLocaleString("en-IN")}</span>
                   </div>
                   <p className="text-xs text-muted-foreground text-center">Shipping & taxes calculated at checkout</p>
-                  <button className="w-full bg-foreground text-background py-4 uppercase tracking-widest text-sm font-medium hover:opacity-90 transition-opacity">
+                  <button onClick={() => setIsCheckoutOpen(true)} className="w-full bg-foreground text-background py-4 uppercase tracking-widest text-sm font-medium hover:opacity-90 transition-opacity">
                     Proceed to Checkout
                   </button>
                 </div>
               )}
             </SheetContent>
           </Sheet>
+
+          <CheckoutModal isOpen={isCheckoutOpen} onClose={() => setIsCheckoutOpen(false)} />
 
         </div>
       </div>

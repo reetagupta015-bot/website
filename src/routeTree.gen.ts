@@ -10,6 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
@@ -19,6 +21,16 @@ import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrdersRoute = OrdersRouteImport.update({
+  id: '/orders',
+  path: '/orders',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -51,6 +63,8 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/login': typeof LoginRoute
+  '/orders': typeof OrdersRoute
+  '/profile': typeof ProfileRoute
   '/signup': typeof SignupRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/product/$id': typeof ProductIdRoute
@@ -59,6 +73,8 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/login': typeof LoginRoute
+  '/orders': typeof OrdersRoute
+  '/profile': typeof ProfileRoute
   '/signup': typeof SignupRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/product/$id': typeof ProductIdRoute
@@ -68,6 +84,8 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/login': typeof LoginRoute
+  '/orders': typeof OrdersRoute
+  '/profile': typeof ProfileRoute
   '/signup': typeof SignupRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/product/$id': typeof ProductIdRoute
@@ -78,16 +96,28 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/login'
+    | '/orders'
+    | '/profile'
     | '/signup'
     | '/auth/callback'
     | '/product/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin' | '/login' | '/signup' | '/auth/callback' | '/product/$id'
+  to:
+    | '/'
+    | '/admin'
+    | '/login'
+    | '/orders'
+    | '/profile'
+    | '/signup'
+    | '/auth/callback'
+    | '/product/$id'
   id:
     | '__root__'
     | '/'
     | '/admin'
     | '/login'
+    | '/orders'
+    | '/profile'
     | '/signup'
     | '/auth/callback'
     | '/product/$id'
@@ -97,6 +127,8 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
   LoginRoute: typeof LoginRoute
+  OrdersRoute: typeof OrdersRoute
+  ProfileRoute: typeof ProfileRoute
   SignupRoute: typeof SignupRoute
   AuthCallbackRoute: typeof AuthCallbackRoute
   ProductIdRoute: typeof ProductIdRoute
@@ -109,6 +141,20 @@ declare module '@tanstack/react-router' {
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/orders': {
+      id: '/orders'
+      path: '/orders'
+      fullPath: '/orders'
+      preLoaderRoute: typeof OrdersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -153,6 +199,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
   LoginRoute: LoginRoute,
+  OrdersRoute: OrdersRoute,
+  ProfileRoute: ProfileRoute,
   SignupRoute: SignupRoute,
   AuthCallbackRoute: AuthCallbackRoute,
   ProductIdRoute: ProductIdRoute,

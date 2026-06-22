@@ -1,9 +1,9 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { a as useQuery } from "../_libs/tanstack__react-query.mjs";
-import { Route as Route$1, supabase, useCart } from "./router-H_MyvO56.mjs";
+import { u as useQuery } from "../_libs/tanstack__react-query.mjs";
+import { Route as Route$1, useCart, supabase } from "./router-DtmgV3UD.mjs";
 import { L as Link } from "../_libs/tanstack__react-router.mjs";
 import "../_libs/sonner.mjs";
-import { H as Heart, C as ChevronDown, V as Video, a as MessageCircle, b as Minus, c as Plus, f as Truck, B as BadgeCheck, d as ShieldCheck } from "../_libs/lucide-react.mjs";
+import { H as Heart, C as ChevronDown, V as Video, h as MessageCircle, b as Minus, P as Plus, f as Truck, B as BadgeCheck, g as ShieldCheck } from "../_libs/lucide-react.mjs";
 import "../_libs/tanstack__query-core.mjs";
 import "../_libs/supabase__supabase-js.mjs";
 import "../_libs/supabase__postgrest-js.mjs";

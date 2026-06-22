@@ -1,6 +1,6 @@
 import { AsyncLocalStorage } from "node:async_hooks";
 import { H as H3Event, t as toResponse } from "../_libs/h3-v2.mjs";
-import { j as defineHandlerCallback, H as resolveManifestAssetLink, I as resolveManifestCssLink, p as getManifestScriptFormat, J as rootRouteId, q as getNormalizedURL, r as getOrigin, c as attachRouterServerSsrUtils, g as createSerializationAdapter, f as createRawStreamRPCPlugin, w as invariant, z as isNotFound, A as isRedirect, C as isResolvedRedirect, F as mergeHeaders, m as executeRewriteInput, i as defaultSerovalPlugins, E as makeSerovalPlugin, s as getScriptPreloadAttrs, u as getStylesheetHref } from "../_libs/tanstack__router-core.mjs";
+import { x as defineHandlerCallback, y as resolveManifestAssetLink, u as resolveManifestCssLink, z as getManifestScriptFormat, k as rootRouteId, A as getNormalizedURL, C as getOrigin, D as attachRouterServerSsrUtils, E as createSerializationAdapter, F as createRawStreamRPCPlugin, i as invariant, g as isNotFound, m as isRedirect, G as isResolvedRedirect, H as mergeHeaders, I as executeRewriteInput, J as defaultSerovalPlugins, K as makeSerovalPlugin, s as getScriptPreloadAttrs, L as getStylesheetHref } from "../_libs/tanstack__router-core.mjs";
 import { i as iu, P as Pu, s as su } from "../_libs/seroval.mjs";
 import { c as createMemoryHistory } from "../_libs/tanstack__history.mjs";
 import { j as jsxRuntimeExports } from "../_libs/react.mjs";
@@ -81,7 +81,7 @@ function getResponse() {
 }
 var HEADERS = { TSS_SHELL: "X-TSS_SHELL" };
 async function getStartManifest(matchedRoutes) {
-  const { tsrStartManifest } = await import("../_tanstack-start-manifest_v-S7YOwN8H.mjs");
+  const { tsrStartManifest } = await import("../_tanstack-start-manifest_v-CkIYdxea.mjs");
   const startManifest = tsrStartManifest();
   let routes = startManifest.routes;
   routes[rootRouteId];
@@ -1187,8 +1187,8 @@ var getBaseManifest = getProdBaseManifest;
 var createEarlyHintsForRequest = createEarlyHintsCollector;
 async function loadEntries() {
   const [routerEntry, startEntry, pluginAdapters] = await Promise.all([
-    import("./router-H_MyvO56.mjs").then((n) => n.router),
-    import("./start-B6GTiqqv.mjs"),
+    import("./router-DtmgV3UD.mjs").then((n) => n.router),
+    import("./start-Cgt_j0Rz.mjs"),
     import("./empty-plugin-adapters-BFgPZ6_d.mjs")
   ]);
   return {

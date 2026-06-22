@@ -2543,10 +2543,10 @@ var QueryClient = class {
 };
 export {
   MutationObserver as M,
-  QueryClient as Q,
-  QueryObserver as a,
-  notifyManager as b,
+  QueryObserver as Q,
+  noop as a,
+  QueryClient as b,
   environmentManager as e,
-  noop as n,
+  notifyManager as n,
   shouldThrowError as s
 };
