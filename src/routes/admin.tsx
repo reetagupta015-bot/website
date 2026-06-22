@@ -18,10 +18,11 @@ function AdminPage() {
   const [isEditing, setIsEditing] = useState<any>(null);
   const [isAdding, setIsAdding] = useState(false);
 
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return sessionStorage.getItem("adminAuth") === "true";
-  });
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    setIsAuthenticated(sessionStorage.getItem("adminAuth") === "true");
+  }, []);
   const [loginId, setLoginId] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 

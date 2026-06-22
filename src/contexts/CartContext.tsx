@@ -27,22 +27,28 @@ type CartContextType = {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
-  const [cart, setCart] = useState<CartItem[]>(() => {
-    if (typeof window === "undefined") return [];
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  // Load from localStorage only on the client side after hydration
+  useEffect(() => {
     try {
       const savedCart = localStorage.getItem("shopping-cart");
-      return savedCart ? JSON.parse(savedCart) : [];
+      if (savedCart) {
+        setCart(JSON.parse(savedCart));
+      }
     } catch (error) {
       console.error("Failed to load cart from localStorage", error);
-      return [];
     }
-  });
+    setIsLoaded(true);
+  }, []);
 
+  // Save to localStorage whenever cart changes, but only after initial load
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (isLoaded && typeof window !== "undefined") {
       localStorage.setItem("shopping-cart", JSON.stringify(cart));
     }
-  }, [cart]);
+  }, [cart, isLoaded]);
 
   const addToCart = (newItem: CartItem) => {
     setCart((prevCart) => {
