@@ -1,4 +1,16 @@
-export function renderErrorPage(): string {
+export function renderErrorPage(error?: unknown): string {
+  const errorDetails = error
+    ? error instanceof Error
+      ? `${error.name}: ${error.message}\n${error.stack}`
+      : typeof error === "object"
+        ? JSON.stringify(error, null, 2)
+        : String(error)
+    : "";
+
+  const errorHtml = errorDetails
+    ? `<div style="text-align: left; background: #fee2e2; border: 1px solid #fca5a5; color: #991b1b; padding: 1rem; border-radius: 0.375rem; margin-top: 1.5rem; overflow: auto; max-height: 250px; font-family: monospace; font-size: 0.8rem; white-space: pre-wrap; text-align: left; direction: ltr;">${escapeHtml(errorDetails)}</div>`
+    : "";
+
   return `<!doctype html>
 <html lang="en">
   <head>
@@ -24,7 +36,18 @@ export function renderErrorPage(): string {
         <button class="primary" onclick="location.reload()">Try again</button>
         <a class="secondary" href="/">Go home</a>
       </div>
+      ${errorHtml}
     </div>
   </body>
 </html>`;
 }
+
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
