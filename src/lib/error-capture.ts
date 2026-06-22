@@ -15,6 +15,8 @@ if (typeof globalThis.addEventListener === "function") {
   );
 }
 
+(globalThis as any)["__LOVABLE_TANSTACK_CAPTURE_SSR_ERROR__"] = record;
+
 export function consumeLastCapturedError(): unknown {
   if (!lastCapturedError) return undefined;
   if (Date.now() - lastCapturedError.at > TTL_MS) {

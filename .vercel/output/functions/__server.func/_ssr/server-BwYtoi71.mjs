@@ -68,7 +68,10 @@ function requestHandler(handler) {
       });
       throw error;
     }
-    return toResponse(attachResponseHeaders(eventStorage.run({ h3Event }, () => handler(request, requestOpts)), h3Event), h3Event);
+    return toResponse(attachResponseHeaders(eventStorage.run({ h3Event }, () => Promise.resolve(handler(request, requestOpts)).catch((err) => {
+      globalThis.__LOVABLE_TANSTACK_CAPTURE_SSR_ERROR__?.(err);
+      throw err;
+    })), h3Event), h3Event);
   };
 }
 function getH3Event() {
@@ -1188,7 +1191,7 @@ var createEarlyHintsForRequest = createEarlyHintsCollector;
 async function loadEntries() {
   const [routerEntry, startEntry, pluginAdapters] = await Promise.all([
     import("./router-DnJebkYP.mjs").then((n) => n.router),
-    import("./start-Bjygfko-.mjs"),
+    import("./start-m2AnywTf.mjs"),
     import("./empty-plugin-adapters-BFgPZ6_d.mjs")
   ]);
   return {

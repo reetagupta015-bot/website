@@ -10,6 +10,7 @@ if (typeof globalThis.addEventListener === "function") {
     (event) => record(event.reason)
   );
 }
+globalThis["__LOVABLE_TANSTACK_CAPTURE_SSR_ERROR__"] = record;
 function consumeLastCapturedError() {
   if (!lastCapturedError) return void 0;
   if (Date.now() - lastCapturedError.at > TTL_MS) {
@@ -60,7 +61,7 @@ function escapeHtml(str) {
 let serverEntryPromise;
 async function getServerEntry() {
   if (!serverEntryPromise) {
-    serverEntryPromise = import("./server-EkaPPl0P.mjs").then((n) => n.server).then(
+    serverEntryPromise = import("./server-BwYtoi71.mjs").then((n) => n.server).then(
       (m) => m.default ?? m
     );
   }
