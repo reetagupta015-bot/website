@@ -56,6 +56,7 @@
     "lucide-react": "^0.575.0",
     "nitro": "npm:nitro-nightly@^3.0.1-20260622-083727-6de81eef",
     "react": "^19.2.0",
+    "tslib": "^2.6.2",
     "react-day-picker": "^9.14.0",
     "react-dom": "^19.2.0",
     "react-hook-form": "^7.71.2",
