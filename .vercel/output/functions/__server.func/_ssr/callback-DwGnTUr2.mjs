@@ -1,5 +1,5 @@
-import { reactExports, jsxRuntimeExports } from "./server-UVxo8XOe.mjs";
-import { useNavigate, supabase } from "./router-DSO1t1MA.mjs";
+import { reactExports, jsxRuntimeExports } from "./server-D39xh37i.mjs";
+import { useNavigate, supabase } from "./router-DusIiRl-.mjs";
 import "node:async_hooks";
 import "node:stream";
 import "node:stream/web";
@@ -13,17 +13,21 @@ function AuthCallback() {
     supabase.auth.getSession().then(({
       data
     }) => {
+      const redirectPath = sessionStorage.getItem("redirectPath") || "/";
       if (data.session) {
+        sessionStorage.removeItem("redirectPath");
         navigate({
-          to: "/"
+          to: redirectPath
         });
       } else {
         const {
           data: listener
         } = supabase.auth.onAuthStateChange((event, session) => {
           if (session) {
+            const path = sessionStorage.getItem("redirectPath") || "/";
+            sessionStorage.removeItem("redirectPath");
             navigate({
-              to: "/"
+              to: path
             });
           }
         });

@@ -1,6 +1,6 @@
-import { reactExports, jsxRuntimeExports } from "./server-UVxo8XOe.mjs";
-import { useNavigate, Link, toast, supabase } from "./router-DSO1t1MA.mjs";
-import { l as lovable } from "./index-CagOYNKy.mjs";
+import { reactExports, jsxRuntimeExports } from "./server-D39xh37i.mjs";
+import { useNavigate, supabase, Link, toast } from "./router-DusIiRl-.mjs";
+import { l as lovable } from "./index-DSUMitEE.mjs";
 import "node:async_hooks";
 import "node:stream";
 import "node:stream/web";
@@ -8,35 +8,43 @@ import "util";
 import "crypto";
 import "async_hooks";
 import "stream";
-function SignupPage() {
+function LoginPage() {
   const navigate = useNavigate();
-  const [name, setName] = reactExports.useState("");
   const [email, setEmail] = reactExports.useState("");
   const [password, setPassword] = reactExports.useState("");
   const [loading, setLoading] = reactExports.useState(false);
-  const handleSignup = async (e) => {
+  reactExports.useEffect(() => {
+    supabase.auth.getSession().then(({
+      data
+    }) => {
+      if (data.session) {
+        const redirectPath = sessionStorage.getItem("redirectPath") || "/";
+        sessionStorage.removeItem("redirectPath");
+        navigate({
+          to: redirectPath
+        });
+      }
+    });
+  }, [navigate]);
+  const handleEmailLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     const {
       error
-    } = await supabase.auth.signUp({
+    } = await supabase.auth.signInWithPassword({
       email,
-      password,
-      options: {
-        emailRedirectTo: window.location.origin,
-        data: {
-          full_name: name
-        }
-      }
+      password
     });
     setLoading(false);
     if (error) {
       toast.error(error.message);
       return;
     }
-    toast.success("Check your email to confirm your account");
+    toast.success("Welcome back");
+    const redirectPath = sessionStorage.getItem("redirectPath") || "/";
+    sessionStorage.removeItem("redirectPath");
     navigate({
-      to: "/login"
+      to: redirectPath
     });
   };
   const handleGoogle = async () => {
@@ -50,8 +58,10 @@ function SignupPage() {
       return;
     }
     if (result.redirected) return;
+    const redirectPath = sessionStorage.getItem("redirectPath") || "/";
+    sessionStorage.removeItem("redirectPath");
     navigate({
-      to: "/"
+      to: redirectPath
     });
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "min-h-screen grid place-items-center bg-secondary/30 px-4 py-12", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full max-w-md bg-card border border-border p-8 md:p-10", children: [
@@ -60,37 +70,33 @@ function SignupPage() {
         "Sheet",
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-accent", children: ".in" })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "font-serif text-2xl mt-6", children: "Create your account" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-muted-foreground mt-1", children: "Begin your journey in brilliance" })
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "font-serif text-2xl mt-6", children: "Welcome back" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-muted-foreground mt-1", children: "Sign in to your account" })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: handleGoogle, disabled: loading, className: "w-full flex items-center justify-center gap-3 border border-border py-3 text-sm hover:bg-secondary transition-colors disabled:opacity-50", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(GoogleIcon, {}),
-      " Sign up with Google"
+      " Continue with Google"
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 my-6", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex-1 h-px bg-border" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs uppercase tracking-widest text-muted-foreground", children: "or" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex-1 h-px bg-border" })
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleSignup, className: "space-y-4", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-xs uppercase tracking-widest text-muted-foreground", children: "Full Name" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "text", required: true, value: name, onChange: (e) => setName(e.target.value), className: "mt-1 w-full bg-background border border-border px-4 py-3 text-sm focus:outline-none focus:border-accent" })
-      ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleEmailLogin, className: "space-y-4", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-xs uppercase tracking-widest text-muted-foreground", children: "Email" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "email", required: true, value: email, onChange: (e) => setEmail(e.target.value), className: "mt-1 w-full bg-background border border-border px-4 py-3 text-sm focus:outline-none focus:border-accent" })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-xs uppercase tracking-widest text-muted-foreground", children: "Password" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "password", required: true, minLength: 6, value: password, onChange: (e) => setPassword(e.target.value), className: "mt-1 w-full bg-background border border-border px-4 py-3 text-sm focus:outline-none focus:border-accent" })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "password", required: true, value: password, onChange: (e) => setPassword(e.target.value), className: "mt-1 w-full bg-background border border-border px-4 py-3 text-sm focus:outline-none focus:border-accent" })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "submit", disabled: loading, className: "w-full bg-foreground text-background py-3 text-xs uppercase tracking-widest hover:bg-accent hover:text-accent-foreground transition-colors disabled:opacity-50", children: loading ? "Creating account…" : "Create Account" })
+      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "submit", disabled: loading, className: "w-full bg-foreground text-background py-3 text-xs uppercase tracking-widest hover:bg-accent hover:text-accent-foreground transition-colors disabled:opacity-50", children: loading ? "Signing in…" : "Sign In" })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-center text-sm text-muted-foreground mt-6", children: [
-      "Already have an account?",
+      "New to Sheet.in?",
       " ",
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/login", className: "text-foreground underline hover:text-accent", children: "Sign In" })
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/signup", className: "text-foreground underline hover:text-accent", children: "Create an account" })
     ] })
   ] }) });
 }
@@ -103,5 +109,5 @@ function GoogleIcon() {
   ] });
 }
 export {
-  SignupPage as component
+  LoginPage as component
 };

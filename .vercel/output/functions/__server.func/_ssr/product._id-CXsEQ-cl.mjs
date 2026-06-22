@@ -1,6 +1,6 @@
-import { reactExports, jsxRuntimeExports } from "./server-UVxo8XOe.mjs";
-import { Route as Route$1, useQuery, useCart, Link, Minus, Plus, createLucideIcon, supabase } from "./router-DSO1t1MA.mjs";
-import { T as Truck, B as BadgeCheck, S as ShieldCheck } from "./truck-UNp9CfGL.mjs";
+import { reactExports, jsxRuntimeExports } from "./server-D39xh37i.mjs";
+import { Route as Route$1, useQuery, useAuth, useNavigate, useCart, Link, Minus, Plus, CheckoutModal, createLucideIcon, toast, supabase } from "./router-DusIiRl-.mjs";
+import { T as Truck, B as BadgeCheck, S as ShieldCheck } from "./truck-Brkbqo_S.mjs";
 import "node:async_hooks";
 import "node:stream";
 import "node:stream/web";
@@ -106,6 +106,48 @@ function ProductPage() {
   const [engraving, setEngraving] = reactExports.useState("");
   const [quantity, setQuantity] = reactExports.useState(1);
   const [showBreakup, setShowBreakup] = reactExports.useState(false);
+  const {
+    session
+  } = useAuth();
+  const navigate = useNavigate();
+  const [isCheckoutOpen, setIsCheckoutOpen] = reactExports.useState(false);
+  reactExports.useEffect(() => {
+    const savedSize = sessionStorage.getItem("pending_size");
+    const savedQuality = sessionStorage.getItem("pending_quality");
+    const savedColor = sessionStorage.getItem("pending_color");
+    const savedDiamond = sessionStorage.getItem("pending_diamond");
+    const savedEngraving = sessionStorage.getItem("pending_engraving");
+    const savedQuantity = sessionStorage.getItem("pending_quantity");
+    if (savedSize) {
+      setSelectedSize(savedSize);
+      sessionStorage.removeItem("pending_size");
+    }
+    if (savedQuality) {
+      setSelectedQuality(savedQuality);
+      sessionStorage.removeItem("pending_quality");
+    }
+    if (savedColor) {
+      setSelectedColor(savedColor);
+      sessionStorage.removeItem("pending_color");
+    }
+    if (savedDiamond) {
+      setSelectedDiamond(savedDiamond);
+      sessionStorage.removeItem("pending_diamond");
+    }
+    if (savedEngraving) {
+      setEngraving(savedEngraving);
+      sessionStorage.removeItem("pending_engraving");
+    }
+    if (savedQuantity) {
+      setQuantity(parseInt(savedQuantity, 10));
+      sessionStorage.removeItem("pending_quantity");
+    }
+    const autoCheckout = sessionStorage.getItem("autoCheckout") === "true";
+    if (autoCheckout && session) {
+      sessionStorage.removeItem("autoCheckout");
+      setIsCheckoutOpen(true);
+    }
+  }, [session]);
   if (isLoading) {
     return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "min-h-screen grid place-items-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "tracking-widest uppercase text-sm", children: "Loading..." }) });
   }
@@ -123,7 +165,11 @@ function ProductPage() {
   const {
     addToCart
   } = useCart();
-  const handleAddToCart = () => {
+  const handleAddToCart = (showToast = true) => {
+    if (!selectedSize) {
+      toast.error("Please select a size first.");
+      return false;
+    }
     addToCart({
       id: `${product.id}-${selectedQuality}-${selectedColor}-${selectedDiamond}-${selectedSize}-${engraving}`,
       productId: product.id,
@@ -137,6 +183,30 @@ function ProductPage() {
       size: selectedSize,
       engraving
     });
+    if (showToast) {
+      toast.success("Added to cart!");
+    }
+    return true;
+  };
+  const handleBuyNow = () => {
+    const added = handleAddToCart(false);
+    if (!added) return;
+    if (!session) {
+      sessionStorage.setItem("pending_size", selectedSize);
+      sessionStorage.setItem("pending_quality", selectedQuality);
+      sessionStorage.setItem("pending_color", selectedColor);
+      sessionStorage.setItem("pending_diamond", selectedDiamond);
+      sessionStorage.setItem("pending_engraving", engraving);
+      sessionStorage.setItem("pending_quantity", quantity.toString());
+      sessionStorage.setItem("redirectPath", window.location.pathname);
+      sessionStorage.setItem("autoCheckout", "true");
+      toast.info("Please log in to complete your purchase.");
+      navigate({
+        to: "/login"
+      });
+    } else {
+      setIsCheckoutOpen(true);
+    }
   };
   const getColorCode = (color) => {
     if (color.toLowerCase().includes("rose")) return "bg-[#e0bfa6]";
@@ -280,7 +350,7 @@ function ProductPage() {
             ] }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: handleAddToCart, className: "flex-1 border border-foreground bg-background text-foreground py-3 uppercase tracking-widest text-xs font-medium hover:bg-secondary transition-colors", children: "Add To Cart" })
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(DispatchButton, { onClick: handleAddToCart, className: "w-full bg-foreground text-background uppercase tracking-widest text-sm font-medium hover:opacity-95 transition-opacity" })
+          /* @__PURE__ */ jsxRuntimeExports.jsx(DispatchButton, { onClick: handleBuyNow, className: "w-full bg-foreground text-background uppercase tracking-widest text-sm font-medium hover:opacity-95 transition-opacity" })
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-4 gap-2 pt-8 border-t border-border text-center", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col items-center gap-2", children: [
@@ -309,7 +379,8 @@ function ProductPage() {
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm text-muted-foreground leading-relaxed space-y-4", children: product.description ? product.description.split("\n").map((p, i) => /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: p }, i)) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "A symbol of pure elegance and enduring love, this beautiful piece celebrates the timeless beauty of simplicity. At its heart lies a magnificent lab-grown diamond — expertly cut to maximize brilliance, fire, and clarity." }) })
         ] })
       ] })
-    ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(CheckoutModal, { isOpen: isCheckoutOpen, onClose: () => setIsCheckoutOpen(false) })
   ] });
 }
 export {

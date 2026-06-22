@@ -1,13 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { useState } from "react";
-import { Header } from "./index"; // Need to extract Header from index or copy it. Wait, I'll copy the header or just navigate without it? Let's use a simpler header or just import it. Actually, Header in index.tsx is not exported. Let me just create a standalone simplified header here for now or I can extract it later.
+import { useState, useEffect } from "react";
 import { Truck, ShieldCheck, Heart, BadgeCheck, Plus, Minus, ChevronDown, MessageCircle, Video } from "lucide-react";
 import { toast } from "sonner";
-import { Link } from "@tanstack/react-router";
 import { useCart } from "@/contexts/CartContext";
 import { DispatchButton } from "@/components/DispatchButton";
+import { useAuth } from "@/hooks/use-auth";
+import { CheckoutModal } from "@/components/CheckoutModal";
 
 export const Route = createFileRoute("/product/$id")({
   component: ProductPage,
@@ -34,6 +34,51 @@ function ProductPage() {
   const [quantity, setQuantity] = useState(1);
   const [showBreakup, setShowBreakup] = useState(false);
 
+  const { session } = useAuth();
+  const navigate = useNavigate();
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+
+  // Restore options on return from login
+  useEffect(() => {
+    const savedSize = sessionStorage.getItem("pending_size");
+    const savedQuality = sessionStorage.getItem("pending_quality");
+    const savedColor = sessionStorage.getItem("pending_color");
+    const savedDiamond = sessionStorage.getItem("pending_diamond");
+    const savedEngraving = sessionStorage.getItem("pending_engraving");
+    const savedQuantity = sessionStorage.getItem("pending_quantity");
+
+    if (savedSize) {
+      setSelectedSize(savedSize);
+      sessionStorage.removeItem("pending_size");
+    }
+    if (savedQuality) {
+      setSelectedQuality(savedQuality);
+      sessionStorage.removeItem("pending_quality");
+    }
+    if (savedColor) {
+      setSelectedColor(savedColor);
+      sessionStorage.removeItem("pending_color");
+    }
+    if (savedDiamond) {
+      setSelectedDiamond(savedDiamond);
+      sessionStorage.removeItem("pending_diamond");
+    }
+    if (savedEngraving) {
+      setEngraving(savedEngraving);
+      sessionStorage.removeItem("pending_engraving");
+    }
+    if (savedQuantity) {
+      setQuantity(parseInt(savedQuantity, 10));
+      sessionStorage.removeItem("pending_quantity");
+    }
+
+    const autoCheckout = sessionStorage.getItem("autoCheckout") === "true";
+    if (autoCheckout && session) {
+      sessionStorage.removeItem("autoCheckout");
+      setIsCheckoutOpen(true);
+    }
+  }, [session]);
+
   if (isLoading) {
     return <div className="min-h-screen grid place-items-center"><p className="tracking-widest uppercase text-sm">Loading...</p></div>;
   }
@@ -55,7 +100,11 @@ function ProductPage() {
 
   const { addToCart } = useCart();
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (showToast = true) => {
+    if (!selectedSize) {
+      toast.error("Please select a size first.");
+      return false;
+    }
     addToCart({
       id: `${product.id}-${selectedQuality}-${selectedColor}-${selectedDiamond}-${selectedSize}-${engraving}`,
       productId: product.id,
@@ -69,6 +118,34 @@ function ProductPage() {
       size: selectedSize,
       engraving,
     });
+    if (showToast) {
+      toast.success("Added to cart!");
+    }
+    return true;
+  };
+
+  const handleBuyNow = () => {
+    const added = handleAddToCart(false);
+    if (!added) return;
+
+    if (!session) {
+      // Save current options
+      sessionStorage.setItem("pending_size", selectedSize);
+      sessionStorage.setItem("pending_quality", selectedQuality);
+      sessionStorage.setItem("pending_color", selectedColor);
+      sessionStorage.setItem("pending_diamond", selectedDiamond);
+      sessionStorage.setItem("pending_engraving", engraving);
+      sessionStorage.setItem("pending_quantity", quantity.toString());
+
+      // Save redirect parameters
+      sessionStorage.setItem("redirectPath", window.location.pathname);
+      sessionStorage.setItem("autoCheckout", "true");
+      
+      toast.info("Please log in to complete your purchase.");
+      navigate({ to: "/login" });
+    } else {
+      setIsCheckoutOpen(true);
+    }
   };
 
   const getColorCode = (color: string) => {
@@ -223,7 +300,7 @@ function ProductPage() {
               </button>
             </div>
             <DispatchButton 
-              onClick={handleAddToCart} 
+              onClick={handleBuyNow} 
               className="w-full bg-foreground text-background uppercase tracking-widest text-sm font-medium hover:opacity-95 transition-opacity" 
             />
           </div>
@@ -268,6 +345,7 @@ function ProductPage() {
 
         </div>
       </main>
+      <CheckoutModal isOpen={isCheckoutOpen} onClose={() => setIsCheckoutOpen(false)} />
     </div>
   );
 }

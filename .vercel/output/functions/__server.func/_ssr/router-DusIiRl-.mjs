@@ -1,4 +1,4 @@
-import { compileDecodeCharMap, createLRUCache, trimPath, rewriteBasepath, composeRewrites, processRouteTree, processRouteMasks, resolvePath, cleanPath, trimPathRight, createControlledPromise, parseHref, executeRewriteInput, isDangerousProtocol, redirect, isRedirect, isNotFound, findSingleMatch, deepEqual, DEFAULT_PROTOCOL_ALLOWLIST, buildRouteBranch, interpolatePath, nullReplaceEqualDeep, replaceEqualDeep as replaceEqualDeep$1, last, decodePath, findFlatMatch, functionalUpdate as functionalUpdate$1, findRouteMatch, isPromise, invariant, rootRouteId, useRouter, jsxRuntimeExports, Outlet, hasKeys, executeRewriteOutput, arraysEqual, reactExports, React, exactPathTest, removeTrailingSlash, getDefaultExportFromCjs, isModuleNotFoundError, isServer as isServer$1, dummyMatchContext, matchContext, requireReactDom, escapeHtml, getAssetCrossOrigin, getScriptPreloadAttrs, appendUniqueUserTags, useHydrated, trimPathLeft, joinPaths, resolveManifestCssLink, encodePathLikeUrl, React$1, commonjsGlobal } from "./server-UVxo8XOe.mjs";
+import { compileDecodeCharMap, createLRUCache, trimPath, rewriteBasepath, composeRewrites, processRouteTree, processRouteMasks, resolvePath, cleanPath, trimPathRight, createControlledPromise, parseHref, executeRewriteInput, isDangerousProtocol, redirect, isRedirect, isNotFound, findSingleMatch, deepEqual, DEFAULT_PROTOCOL_ALLOWLIST, buildRouteBranch, interpolatePath, nullReplaceEqualDeep, replaceEqualDeep as replaceEqualDeep$1, last, decodePath, findFlatMatch, functionalUpdate as functionalUpdate$1, findRouteMatch, isPromise, invariant, rootRouteId, useRouter, jsxRuntimeExports, Outlet, hasKeys, executeRewriteOutput, arraysEqual, reactExports, React, exactPathTest, removeTrailingSlash, getDefaultExportFromCjs, isModuleNotFoundError, isServer as isServer$1, dummyMatchContext, matchContext, requireReactDom, escapeHtml, getAssetCrossOrigin, getScriptPreloadAttrs, appendUniqueUserTags, useHydrated, trimPathLeft, joinPaths, resolveManifestCssLink, encodePathLikeUrl, React$1, commonjsGlobal } from "./server-D39xh37i.mjs";
 import "node:async_hooks";
 import "node:stream";
 import "node:stream/web";
@@ -5285,7 +5285,7 @@ function useBaseQuery(options, Observer2, queryClient) {
 function useQuery(options, queryClient) {
   return useBaseQuery(options, QueryObserver);
 }
-const appCss = "/assets/styles-HbZdfVnD.css";
+const appCss = "/assets/styles-To-FDuLC.css";
 function __insertCSS(code) {
   if (typeof document == "undefined") return;
   let head2 = document.head || document.getElementsByTagName("head")[0];
@@ -6518,7 +6518,7 @@ function RootComponent() {
     /* @__PURE__ */ jsxRuntimeExports.jsx(Toaster, { position: "top-center", richColors: true })
   ] }) });
 }
-const $$splitComponentImporter$7 = () => import("./signup-B5kv1rae.mjs");
+const $$splitComponentImporter$7 = () => import("./signup-D54pjTrn.mjs");
 const Route$7 = createFileRoute("/signup")({
   head: () => ({
     meta: [{
@@ -6530,7 +6530,7 @@ const Route$7 = createFileRoute("/signup")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$7, "component")
 });
-const $$splitComponentImporter$6 = () => import("./profile-_h1Fxn7T.mjs");
+const $$splitComponentImporter$6 = () => import("./profile-CdVpwovU.mjs");
 const Route$6 = createFileRoute("/profile")({
   head: () => ({
     meta: [{
@@ -6539,7 +6539,7 @@ const Route$6 = createFileRoute("/profile")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$6, "component")
 });
-const $$splitComponentImporter$5 = () => import("./orders-CXUTSjvw.mjs");
+const $$splitComponentImporter$5 = () => import("./orders-yG_ueqmf.mjs");
 const Route$5 = createFileRoute("/orders")({
   head: () => ({
     meta: [{
@@ -6548,7 +6548,7 @@ const Route$5 = createFileRoute("/orders")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$5, "component")
 });
-const $$splitComponentImporter$4 = () => import("./login-C9XQFLaj.mjs");
+const $$splitComponentImporter$4 = () => import("./login-wN3HxAFf.mjs");
 const Route$4 = createFileRoute("/login")({
   head: () => ({
     meta: [{
@@ -6560,7 +6560,7 @@ const Route$4 = createFileRoute("/login")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$4, "component")
 });
-const $$splitComponentImporter$3 = () => import("./admin-XUdCyW1L.mjs");
+const $$splitComponentImporter$3 = () => import("./admin-DJV2dzBu.mjs");
 const Route$3 = createFileRoute("/admin")({
   head: () => ({
     meta: [{
@@ -33327,6 +33327,7 @@ function CheckoutModal({ isOpen, onClose }) {
   const { cart, cartTotal, clearCart } = useCart();
   const navigate = useNavigate();
   const [loading, setLoading] = reactExports.useState(false);
+  const [step, setStep] = reactExports.useState("address");
   const [formData, setFormData] = reactExports.useState({
     name: "",
     email: session?.user?.email || "",
@@ -33337,6 +33338,14 @@ function CheckoutModal({ isOpen, onClose }) {
     pincode: "",
     paymentMethod: "Cash on Delivery"
   });
+  reactExports.useEffect(() => {
+    if (isOpen) {
+      setStep("address");
+      if (session?.user?.email) {
+        setFormData((prev) => ({ ...prev, email: session.user.email || "" }));
+      }
+    }
+  }, [isOpen, session]);
   reactExports.useEffect(() => {
     if (isOpen && session?.user?.id) {
       supabase.from("profiles").select("*").eq("id", session.user.id).single().then(({ data }) => {
@@ -33358,6 +33367,43 @@ function CheckoutModal({ isOpen, onClose }) {
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+  const validateAddressStep = () => {
+    if (!formData.name.trim()) {
+      toast.error("Please enter your name");
+      return false;
+    }
+    if (!formData.email.trim() || !formData.email.includes("@")) {
+      toast.error("Please enter a valid email address");
+      return false;
+    }
+    if (!formData.phone.trim()) {
+      toast.error("Please enter your phone number");
+      return false;
+    }
+    if (!formData.address.trim()) {
+      toast.error("Please enter your shipping address");
+      return false;
+    }
+    if (!formData.city.trim()) {
+      toast.error("Please enter your city");
+      return false;
+    }
+    if (!formData.state.trim()) {
+      toast.error("Please enter your state");
+      return false;
+    }
+    if (!formData.pincode.trim()) {
+      toast.error("Please enter your pincode");
+      return false;
+    }
+    return true;
+  };
+  const handleContinueToPayment = (e) => {
+    e.preventDefault();
+    if (validateAddressStep()) {
+      setStep("payment");
+    }
+  };
   const handleCheckout = async (e) => {
     e.preventDefault();
     if (!session?.user) {
@@ -33367,6 +33413,10 @@ function CheckoutModal({ isOpen, onClose }) {
     }
     if (cart.length === 0) {
       toast.error("Your cart is empty");
+      return;
+    }
+    if (!validateAddressStep()) {
+      setStep("address");
       return;
     }
     setLoading(true);
@@ -33419,79 +33469,178 @@ function CheckoutModal({ isOpen, onClose }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-50 bg-background/80 backdrop-blur-sm flex items-center justify-center p-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-card border border-border w-full max-w-2xl shadow-xl max-h-[90vh] flex flex-col relative", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onClose, className: "absolute right-4 top-4 p-2 text-muted-foreground hover:text-foreground", children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "w-5 h-5" }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-6 md:p-8 border-b", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "font-serif text-2xl", children: "Secure Checkout" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-muted-foreground mt-1", children: "Complete your order details below" })
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "font-serif text-2xl font-semibold", children: "Secure Checkout" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-muted-foreground mt-1", children: "Complete your purchase in two simple steps" })
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-6 md:p-8 overflow-y-auto flex-1", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { id: "checkout-form", onSubmit: handleCheckout, className: "space-y-6", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-4", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-sm uppercase tracking-widest font-medium border-b pb-2", children: "Contact Info" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid md:grid-cols-2 gap-4", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-xs uppercase tracking-widest text-muted-foreground mb-1 block", children: "Full Name" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("input", { required: true, name: "name", value: formData.name, onChange: handleChange, className: "w-full bg-background border border-border px-4 py-2.5 text-sm focus:outline-none focus:border-accent" })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-xs uppercase tracking-widest text-muted-foreground mb-1 block", children: "Email" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("input", { required: true, type: "email", name: "email", value: formData.email, onChange: handleChange, className: "w-full bg-background border border-border px-4 py-2.5 text-sm focus:outline-none focus:border-accent" })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-xs uppercase tracking-widest text-muted-foreground mb-1 block", children: "Phone" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("input", { required: true, type: "tel", name: "phone", value: formData.phone, onChange: handleChange, className: "w-full bg-background border border-border px-4 py-2.5 text-sm focus:outline-none focus:border-accent" })
-          ] })
-        ] })
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-6 md:p-8 overflow-y-auto flex-1", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-6 mb-8 border-b border-border/60 pb-4", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "button",
+          {
+            type: "button",
+            onClick: () => {
+              if (step === "payment") setStep("address");
+            },
+            disabled: step === "address",
+            className: `flex items-center gap-2 text-xs uppercase tracking-widest font-semibold transition-colors ${step === "address" ? "text-accent" : "text-muted-foreground hover:text-foreground"}`,
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: `w-5 h-5 rounded-full flex items-center justify-center text-[10px] border ${step === "address" ? "bg-accent text-accent-foreground border-accent" : "border-muted-foreground"}`, children: "1" }),
+              "Address Details"
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-muted-foreground/40 text-sm", children: "→" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            className: `flex items-center gap-2 text-xs uppercase tracking-widest font-semibold ${step === "payment" ? "text-accent" : "text-muted-foreground"}`,
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: `w-5 h-5 rounded-full flex items-center justify-center text-[10px] border ${step === "payment" ? "bg-accent text-accent-foreground border-accent" : "border-muted-foreground"}`, children: "2" }),
+              "Payment Option"
+            ]
+          }
+        )
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-4", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-sm uppercase tracking-widest font-medium border-b pb-2", children: "Shipping Address" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-xs uppercase tracking-widest text-muted-foreground mb-1 block", children: "Street Address" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("input", { required: true, name: "address", value: formData.address, onChange: handleChange, className: "w-full bg-background border border-border px-4 py-2.5 text-sm focus:outline-none focus:border-accent" })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { id: "checkout-form", onSubmit: handleCheckout, className: "space-y-6", children: [
+        step === "address" && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-6 animate-fadeIn", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-4", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-xs uppercase tracking-widest font-bold text-muted-foreground border-b pb-2", children: "Contact Info" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid md:grid-cols-2 gap-4", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-xs uppercase tracking-widest text-muted-foreground mb-1 block", children: "Full Name" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("input", { required: true, name: "name", value: formData.name, onChange: handleChange, className: "w-full bg-background border border-border px-4 py-2.5 text-sm focus:outline-none focus:border-accent" })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-xs uppercase tracking-widest text-muted-foreground mb-1 block", children: "Email Address" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("input", { required: true, type: "email", name: "email", value: formData.email, onChange: handleChange, className: "w-full bg-background border border-border px-4 py-2.5 text-sm focus:outline-none focus:border-accent" })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "md:col-span-2", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-xs uppercase tracking-widest text-muted-foreground mb-1 block", children: "Phone Number" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("input", { required: true, type: "tel", name: "phone", value: formData.phone, onChange: handleChange, className: "w-full bg-background border border-border px-4 py-2.5 text-sm focus:outline-none focus:border-accent" })
+              ] })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-4", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-xs uppercase tracking-widest font-bold text-muted-foreground border-b pb-2", children: "Shipping Address" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-xs uppercase tracking-widest text-muted-foreground mb-1 block", children: "Street Address" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("input", { required: true, name: "address", value: formData.address, onChange: handleChange, className: "w-full bg-background border border-border px-4 py-2.5 text-sm focus:outline-none focus:border-accent" })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid md:grid-cols-3 gap-4", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-xs uppercase tracking-widest text-muted-foreground mb-1 block", children: "City" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("input", { required: true, name: "city", value: formData.city, onChange: handleChange, className: "w-full bg-background border border-border px-4 py-2.5 text-sm focus:outline-none focus:border-accent" })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-xs uppercase tracking-widest text-muted-foreground mb-1 block", children: "State" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("input", { required: true, name: "state", value: formData.state, onChange: handleChange, className: "w-full bg-background border border-border px-4 py-2.5 text-sm focus:outline-none focus:border-accent" })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-xs uppercase tracking-widest text-muted-foreground mb-1 block", children: "Pincode" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("input", { required: true, name: "pincode", value: formData.pincode, onChange: handleChange, className: "w-full bg-background border border-border px-4 py-2.5 text-sm focus:outline-none focus:border-accent" })
+              ] })
+            ] })
+          ] })
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid md:grid-cols-3 gap-4", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-xs uppercase tracking-widest text-muted-foreground mb-1 block", children: "City" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("input", { required: true, name: "city", value: formData.city, onChange: handleChange, className: "w-full bg-background border border-border px-4 py-2.5 text-sm focus:outline-none focus:border-accent" })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-xs uppercase tracking-widest text-muted-foreground mb-1 block", children: "State" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("input", { required: true, name: "state", value: formData.state, onChange: handleChange, className: "w-full bg-background border border-border px-4 py-2.5 text-sm focus:outline-none focus:border-accent" })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-xs uppercase tracking-widest text-muted-foreground mb-1 block", children: "Pincode" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("input", { required: true, name: "pincode", value: formData.pincode, onChange: handleChange, className: "w-full bg-background border border-border px-4 py-2.5 text-sm focus:outline-none focus:border-accent" })
+        step === "payment" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-6 animate-fadeIn", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-4", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-xs uppercase tracking-widest font-bold text-muted-foreground border-b pb-2", children: "Payment Method" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-3", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "flex items-start gap-4 p-4 border border-border bg-background hover:bg-secondary/20 cursor-pointer transition-colors", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "input",
+                {
+                  type: "radio",
+                  name: "paymentMethod",
+                  value: "Cash on Delivery",
+                  checked: formData.paymentMethod === "Cash on Delivery",
+                  onChange: handleChange,
+                  className: "mt-1 accent-accent"
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm font-semibold", children: "Cash on Delivery (COD)" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-muted-foreground mt-1", children: "Pay with cash when your package is delivered to your door." })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "flex items-start gap-4 p-4 border border-border bg-background hover:bg-secondary/20 cursor-pointer transition-colors", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "input",
+                {
+                  type: "radio",
+                  name: "paymentMethod",
+                  value: "UPI",
+                  checked: formData.paymentMethod === "UPI",
+                  onChange: handleChange,
+                  className: "mt-1 accent-accent"
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm font-semibold", children: "UPI / Online Payment" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-muted-foreground mt-1", children: "Pay securely via Google Pay, PhonePe, Paytm, or net banking." })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "flex items-start gap-4 p-4 border border-border bg-background hover:bg-secondary/20 cursor-pointer transition-colors", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "input",
+                {
+                  type: "radio",
+                  name: "paymentMethod",
+                  value: "Credit Card",
+                  checked: formData.paymentMethod === "Credit Card",
+                  onChange: handleChange,
+                  className: "mt-1 accent-accent"
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm font-semibold", children: "Credit / Debit Card" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-muted-foreground mt-1", children: "Accepting Visa, Mastercard, RuPay, and American Express." })
+              ] })
+            ] })
           ] })
-        ] })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-4", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-sm uppercase tracking-widest font-medium border-b pb-2", children: "Payment Method" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("select", { name: "paymentMethod", value: formData.paymentMethod, onChange: handleChange, className: "w-full bg-background border border-border px-4 py-2.5 text-sm focus:outline-none focus:border-accent", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Cash on Delivery", children: "Cash on Delivery" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "UPI", children: "UPI / Online Payment" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Credit Card", children: "Credit / Debit Card" })
-        ] })
+        ] }) })
       ] })
-    ] }) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-6 md:p-8 border-t bg-secondary/20", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between items-center mb-4", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm uppercase tracking-widest font-medium", children: "Total Amount" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "font-serif text-2xl", children: [
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-6 md:p-8 border-t bg-secondary/10", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between items-center mb-6", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm uppercase tracking-widest font-semibold", children: "Total Amount" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "font-serif text-2xl font-semibold", children: [
           "₹",
           cartTotal.toLocaleString("en-IN")
         ] })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
+      step === "address" ? /* @__PURE__ */ jsxRuntimeExports.jsx(
         "button",
         {
-          type: "submit",
-          form: "checkout-form",
-          disabled: loading,
-          className: "w-full bg-foreground text-background py-4 text-xs uppercase tracking-widest font-medium hover:bg-accent hover:text-accent-foreground transition-colors disabled:opacity-50",
-          children: loading ? "Processing..." : "Place Order"
+          type: "button",
+          onClick: handleContinueToPayment,
+          className: "w-full bg-foreground text-background py-4 text-xs uppercase tracking-widest font-semibold hover:bg-accent hover:text-accent-foreground transition-colors",
+          children: "Continue to Payment"
         }
-      )
+      ) : /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-4", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            type: "button",
+            onClick: () => setStep("address"),
+            className: "w-1/3 border border-border bg-background text-foreground py-4 text-xs uppercase tracking-widest font-semibold hover:bg-secondary transition-colors",
+            children: "Back"
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            type: "submit",
+            form: "checkout-form",
+            disabled: loading,
+            className: "flex-1 bg-foreground text-background py-4 text-xs uppercase tracking-widest font-semibold hover:bg-accent hover:text-accent-foreground transition-colors disabled:opacity-50",
+            children: loading ? "Processing..." : "Place Order"
+          }
+        )
+      ] })
     ] })
   ] }) });
 }
-const $$splitComponentImporter$2 = () => import("./index-C_bWU-V6.mjs");
+const $$splitComponentImporter$2 = () => import("./index-OvuZSKK2.mjs");
 const Route$2 = createFileRoute("/")({
   head: () => ({
     meta: [{
@@ -33679,11 +33828,11 @@ function Header() {
     ] })
   ] });
 }
-const $$splitComponentImporter$1 = () => import("./product._id-BRCAWEhJ.mjs");
+const $$splitComponentImporter$1 = () => import("./product._id-CXsEQ-cl.mjs");
 const Route$1 = createFileRoute("/product/$id")({
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-const $$splitComponentImporter = () => import("./callback-B9-WzDju.mjs");
+const $$splitComponentImporter = () => import("./callback-DwGnTUr2.mjs");
 const Route2 = createFileRoute("/auth/callback")({
   component: lazyRouteComponent($$splitComponentImporter, "component")
 });

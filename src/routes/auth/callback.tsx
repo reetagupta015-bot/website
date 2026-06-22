@@ -11,13 +11,17 @@ function AuthCallback() {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
+      const redirectPath = sessionStorage.getItem("redirectPath") || "/";
       if (data.session) {
-        navigate({ to: "/" });
+        sessionStorage.removeItem("redirectPath");
+        navigate({ to: redirectPath });
       } else {
         // Sometimes it takes a moment to process the #access_token or ?code=
         const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
           if (session) {
-            navigate({ to: "/" });
+            const path = sessionStorage.getItem("redirectPath") || "/";
+            sessionStorage.removeItem("redirectPath");
+            navigate({ to: path });
           }
         });
         return () => listener.subscription.unsubscribe();

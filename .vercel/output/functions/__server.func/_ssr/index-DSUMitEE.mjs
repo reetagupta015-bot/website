@@ -1,4 +1,4 @@
-import { supabase } from "./router-DSO1t1MA.mjs";
+import { supabase } from "./router-DusIiRl-.mjs";
 var package_default = {
   version: "1.1.2"
 };

@@ -22,7 +22,11 @@ function LoginPage() {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate({ to: "/" });
+      if (data.session) {
+        const redirectPath = sessionStorage.getItem("redirectPath") || "/";
+        sessionStorage.removeItem("redirectPath");
+        navigate({ to: redirectPath });
+      }
     });
   }, [navigate]);
 
@@ -36,7 +40,9 @@ function LoginPage() {
       return;
     }
     toast.success("Welcome back");
-    navigate({ to: "/" });
+    const redirectPath = sessionStorage.getItem("redirectPath") || "/";
+    sessionStorage.removeItem("redirectPath");
+    navigate({ to: redirectPath });
   };
 
   const handleGoogle = async () => {
@@ -50,7 +56,9 @@ function LoginPage() {
       return;
     }
     if (result.redirected) return;
-    navigate({ to: "/" });
+    const redirectPath = sessionStorage.getItem("redirectPath") || "/";
+    sessionStorage.removeItem("redirectPath");
+    navigate({ to: redirectPath });
   };
 
   return (
