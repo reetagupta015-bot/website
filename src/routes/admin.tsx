@@ -303,6 +303,7 @@ function AdminPage() {
                 <tr>
                   <th className="p-4 font-medium uppercase tracking-wider text-xs">Name</th>
                   <th className="p-4 font-medium uppercase tracking-wider text-xs">Email</th>
+                  <th className="p-4 font-medium uppercase tracking-wider text-xs">Age</th>
                   <th className="p-4 font-medium uppercase tracking-wider text-xs">Phone</th>
                   <th className="p-4 font-medium uppercase tracking-wider text-xs">Joined</th>
                 </tr>
@@ -312,13 +313,14 @@ function AdminPage() {
                   <tr key={profile.id} className="border-b border-border last:border-0 hover:bg-secondary/20 transition-colors">
                     <td className="p-4 font-medium">{profile.full_name || "—"}</td>
                     <td className="p-4">{profile.email || "—"}</td>
+                    <td className="p-4">{profile.age || "—"}</td>
                     <td className="p-4">{profile.phone || "—"}</td>
                     <td className="p-4 text-muted-foreground">{new Date(profile.created_at).toLocaleDateString()}</td>
                   </tr>
                 ))}
                 {(!profiles || profiles.length === 0) && (
                   <tr>
-                    <td colSpan={4} className="p-8 text-center text-muted-foreground">
+                    <td colSpan={5} className="p-8 text-center text-muted-foreground">
                       No customers found.
                     </td>
                   </tr>

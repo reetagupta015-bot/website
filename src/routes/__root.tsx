@@ -10,6 +10,7 @@ import {
 
 import appCss from "../styles.css?url";
 import { Toaster } from "sonner";
+import { CompleteProfileModal } from "@/components/CompleteProfileModal";
 
 function NotFoundComponent() {
   return (
@@ -128,6 +129,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <CartProvider>
         <Outlet />
+        <CompleteProfileModal />
         <Toaster position="top-center" richColors />
       </CartProvider>
     </QueryClientProvider>
