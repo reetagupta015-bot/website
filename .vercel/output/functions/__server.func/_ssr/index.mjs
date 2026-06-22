@@ -61,7 +61,7 @@ function escapeHtml(str) {
 let serverEntryPromise;
 async function getServerEntry() {
   if (!serverEntryPromise) {
-    serverEntryPromise = import("./server-CIZhL1-P.mjs").then((n) => n.server).then(
+    serverEntryPromise = import("./server-UVxo8XOe.mjs").then((n) => n.server).then(
       (m) => m.default ?? m
     );
   }

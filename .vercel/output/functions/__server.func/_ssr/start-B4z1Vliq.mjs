@@ -1,4 +1,4 @@
-import { createMiddleware } from "./server-CIZhL1-P.mjs";
+import { createMiddleware } from "./server-UVxo8XOe.mjs";
 import { renderErrorPage } from "./index.mjs";
 import "node:async_hooks";
 import "node:stream";

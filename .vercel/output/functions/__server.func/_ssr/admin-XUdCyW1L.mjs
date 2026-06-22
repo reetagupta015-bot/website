@@ -1,5 +1,5 @@
-import { reactExports, jsxRuntimeExports } from "./server-CIZhL1-P.mjs";
-import { toast, useNavigate, useQueryClient, useQuery, Plus, notifyManager, noop as noop$1, shouldThrowError, createLucideIcon, supabase, Subscribable, shallowEqualObjects, hashKey, getDefaultState } from "./router-D6-O7ZmP.mjs";
+import { reactExports, jsxRuntimeExports } from "./server-UVxo8XOe.mjs";
+import { toast, useNavigate, useQueryClient, useQuery, Plus, notifyManager, noop as noop$1, shouldThrowError, createLucideIcon, supabase, Subscribable, shallowEqualObjects, hashKey, getDefaultState } from "./router-DSO1t1MA.mjs";
 import "node:async_hooks";
 import "node:stream";
 import "node:stream/web";
@@ -487,7 +487,20 @@ function AdminDashboard() {
           id: isEditing.id
         });
       } else {
-        addMutation.mutate(formattedData);
+        const generateUUID = () => {
+          if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+            return crypto.randomUUID();
+          }
+          return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+            const r = Math.random() * 16 | 0;
+            const v = c === "x" ? r : r & 3 | 8;
+            return v.toString(16);
+          });
+        };
+        addMutation.mutate({
+          ...formattedData,
+          id: generateUUID()
+        });
       }
     }, isLoading: updateMutation.isPending || addMutation.isPending })
   ] }) });
