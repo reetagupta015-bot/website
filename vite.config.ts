@@ -11,11 +11,12 @@ export default defineConfig({
   cloudflare: false,
   vite: {
     ssr: {
-      noExternal: ['@supabase/supabase-js', '@supabase/auth-js', 'tslib'],
+      noExternal: ['@supabase/supabase-js', '@supabase/auth-js', 'tslib', '@lovable.dev/cloud-auth-js'],
     },
     plugins: [
       nitro({
         preset: "vercel",
+        errorHandler: "./error.ts",
       }),
     ],
   },

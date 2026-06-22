@@ -1,7 +1,7 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
 import { d as useNavigate } from "../_libs/tanstack__react-router.mjs";
 import { a as useQueryClient, u as useQuery, b as useMutation } from "../_libs/tanstack__react-query.mjs";
-import { supabase } from "./router-F1NPiPpd.mjs";
+import { supabase } from "./router-DnJebkYP.mjs";
 import { t as toast } from "../_libs/sonner.mjs";
 import "../_libs/supabase__realtime-js.mjs";
 import { P as Plus, e as Pen, T as Trash2 } from "../_libs/lucide-react.mjs";

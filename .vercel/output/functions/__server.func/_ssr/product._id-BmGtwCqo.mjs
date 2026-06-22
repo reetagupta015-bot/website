@@ -1,6 +1,6 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
 import { u as useQuery } from "../_libs/tanstack__react-query.mjs";
-import { Route as Route$1, useCart, supabase } from "./router-F1NPiPpd.mjs";
+import { Route as Route$1, useCart, supabase } from "./router-DnJebkYP.mjs";
 import { L as Link } from "../_libs/tanstack__react-router.mjs";
 import "../_libs/sonner.mjs";
 import "../_libs/supabase__realtime-js.mjs";

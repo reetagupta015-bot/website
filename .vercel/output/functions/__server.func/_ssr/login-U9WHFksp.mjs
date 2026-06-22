@@ -1,10 +1,9 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
 import { d as useNavigate, L as Link } from "../_libs/tanstack__react-router.mjs";
-import { supabase } from "./router-F1NPiPpd.mjs";
-import { l as lovable } from "./index-DtDTVZWy.mjs";
+import { supabase } from "./router-DnJebkYP.mjs";
+import { l as lovable } from "./index-D1G6KN6E.mjs";
 import { t as toast } from "../_libs/sonner.mjs";
 import "../_libs/supabase__realtime-js.mjs";
-import "../_libs/lovable.dev__cloud-auth-js.mjs";
 import "../_libs/tanstack__router-core.mjs";
 import "../_libs/tanstack__history.mjs";
 import "../_libs/cookie-es.mjs";

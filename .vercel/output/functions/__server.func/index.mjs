@@ -29,6 +29,26 @@ const findRoute = /* @__PURE__ */ (() => {
     return { data, params: { "_": p.slice(1) } };
   });
 })();
+function defineNitroErrorHandler(handler) {
+  return handler;
+}
+const errorHandler$0 = defineNitroErrorHandler((error, _event) => {
+  console.error("Global Nitro catch:", error);
+  const errorDetails = error ? error instanceof Error ? `${error.name}: ${error.message}
+${error.stack}` : typeof error === "object" ? JSON.stringify(error, null, 2) : String(error) : "Unknown error";
+  return new Response(
+    `[Vercel SSR Diagnostic Error]
+
+${errorDetails}`,
+    {
+      status: 500,
+      headers: {
+        "content-type": "text/plain; charset=utf-8",
+        "cache-control": "no-store, no-cache, must-revalidate"
+      }
+    }
+  );
+});
 const errorHandler$1 = (error, event) => {
   const res = defaultHandler(error, event);
   return new NodeResponse(typeof res.body === "string" ? res.body : JSON.stringify(res.body, null, 2), res);
@@ -66,7 +86,7 @@ function defaultHandler(error, event) {
     }
   };
 }
-const errorHandlers = [errorHandler$1];
+const errorHandlers = [errorHandler$0, errorHandler$1];
 async function errorHandler(error, event) {
   for (const handler of errorHandlers) {
     try {

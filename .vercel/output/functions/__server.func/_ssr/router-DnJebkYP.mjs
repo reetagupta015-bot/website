@@ -203,7 +203,7 @@ function RootComponent() {
     /* @__PURE__ */ jsxRuntimeExports.jsx(Toaster, { position: "top-center", richColors: true })
   ] }) });
 }
-const $$splitComponentImporter$7 = () => import("./signup-B4SdxhfB.mjs");
+const $$splitComponentImporter$7 = () => import("./signup-DhBz0oh8.mjs");
 const Route$7 = createFileRoute("/signup")({
   head: () => ({
     meta: [{
@@ -215,7 +215,7 @@ const Route$7 = createFileRoute("/signup")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$7, "component")
 });
-const $$splitComponentImporter$6 = () => import("./profile-DF4tN8m8.mjs");
+const $$splitComponentImporter$6 = () => import("./profile-Dnn9PAJ2.mjs");
 const Route$6 = createFileRoute("/profile")({
   head: () => ({
     meta: [{
@@ -224,7 +224,7 @@ const Route$6 = createFileRoute("/profile")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$6, "component")
 });
-const $$splitComponentImporter$5 = () => import("./orders-Cvw6CPZh.mjs");
+const $$splitComponentImporter$5 = () => import("./orders-CsYSvt_R.mjs");
 const Route$5 = createFileRoute("/orders")({
   head: () => ({
     meta: [{
@@ -233,7 +233,7 @@ const Route$5 = createFileRoute("/orders")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$5, "component")
 });
-const $$splitComponentImporter$4 = () => import("./login-ZEaD7swi.mjs");
+const $$splitComponentImporter$4 = () => import("./login-U9WHFksp.mjs");
 const Route$4 = createFileRoute("/login")({
   head: () => ({
     meta: [{
@@ -245,7 +245,7 @@ const Route$4 = createFileRoute("/login")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$4, "component")
 });
-const $$splitComponentImporter$3 = () => import("./admin-BAV07W1s.mjs");
+const $$splitComponentImporter$3 = () => import("./admin-BE7ZySV7.mjs");
 const Route$3 = createFileRoute("/admin")({
   head: () => ({
     meta: [{
@@ -9409,7 +9409,7 @@ function CheckoutModal({ isOpen, onClose }) {
     ] })
   ] }) });
 }
-const $$splitComponentImporter$2 = () => import("./index-D_hP01Xx.mjs");
+const $$splitComponentImporter$2 = () => import("./index-BFaUqNMh.mjs");
 const Route$2 = createFileRoute("/")({
   head: () => ({
     meta: [{
@@ -9597,11 +9597,11 @@ function Header() {
     ] })
   ] });
 }
-const $$splitComponentImporter$1 = () => import("./product._id-CfKdCkp2.mjs");
+const $$splitComponentImporter$1 = () => import("./product._id-BmGtwCqo.mjs");
 const Route$1 = createFileRoute("/product/$id")({
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-const $$splitComponentImporter = () => import("./callback-O5YIMzCY.mjs");
+const $$splitComponentImporter = () => import("./callback-D5zawsgd.mjs");
 const Route = createFileRoute("/auth/callback")({
   component: lazyRouteComponent($$splitComponentImporter, "component")
 });

@@ -1,6 +1,6 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
 import { d as useNavigate } from "../_libs/tanstack__react-router.mjs";
-import { useAuth, Header, supabase } from "./router-F1NPiPpd.mjs";
+import { useAuth, Header, supabase } from "./router-DnJebkYP.mjs";
 import { t as toast } from "../_libs/sonner.mjs";
 import "../_libs/supabase__realtime-js.mjs";
 import { U as User, c as Mail, d as Phone } from "../_libs/lucide-react.mjs";
